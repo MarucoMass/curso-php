@@ -11,31 +11,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once "signup_model.inc.php";
         require_once "signup_contr.inc.php";
 
-        $query = "INSERT INTO users (username, email, pwd) VALUES (:username, :email, :pwd)";
+        // ERROR HANDLERS
 
-        $smtp = $pdo->prepare($query);
+        $errors = [];
 
-        $options = [
-            "cost" => 12
-        ];
+        if (is_input_empty($userName, $email, $pwd)) {
+            $errors["empty_fields"] = "Tienes que completar todos los campos";
+        }
+        if (is_email_invalid($email)) {
+            $errors["invalid_email"] = "El email que ingresaste no es válido";
+        }
+        if (is_username_taken($pdo, $userName)) {
+            $errors["name_taken"] = "El nombre que usaste ya fue tomado por otro usuario";
+        }
+        if (is_email_registered($pdo, $email)) {
+            $errors["email_registered"] = "El email que usaste ya fue registrado por otro usuario";
+        }
 
-        $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT, $options);
+        require_once "config_session.inc.php";
 
-        $smtp->bindParam(":username", $userName);
-        $smtp->bindParam(":email", $email);
-        $smtp->bindParam(":pwd", $hashedPwd);
+        if ($errors) {
+            $_SESSION["errors_signup"] = $errors;
+            header("Location: ../index.php");
+            die();
+        }
 
-        $smtp->execute();
+        create_user($pdo, $userName, $email, $pwd);
+        
+        header("Location: ../index.php?signup=success");
 
         $pdo = null;
         $stmt = null;
 
-        header("Location: ../index.php");
-
+        die();
     } catch (PDOException $e) {
-       die("Falló la solicitud " . $e->getMessage());
+        die("Falló la solicitud " . $e->getMessage());
     }
 } else {
-   header("Location: ../index.php");
-   die();
+    header("Location: ../index.php");
+    die();
 }

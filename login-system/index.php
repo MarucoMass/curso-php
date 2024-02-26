@@ -1,5 +1,6 @@
 <?php
-// require_once "config.php";
+require_once "includes/config_session.inc.php";
+require_once "includes/signup_view.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +26,7 @@
             align-items: center;
             flex-direction: column;
             gap: 3rem;
+            background-color: #f1f1f1;
         }
 
         form {
@@ -34,7 +36,6 @@
         }
 
         section {
-            background-color: lightblue;
             padding: 1rem;
             border-radius: 1rem;
             display: flex;
@@ -57,13 +58,17 @@
         </form>
     </section>
     <section>
-        <h2>Sign Up</h2>
+        <h2 >Sign Up</h2>
         <form action="includes/signup.inc.php" method="post">
             <input type="text" name="username" placeholder="User name">
             <input type="text" name="email" placeholder="Email">
             <input type="password" name="pwd" placeholder="Password">
             <button>Dealé</button>
         </form>
+
+        <?php
+        check_signup_errors();
+        ?>
     </section>
 
    
