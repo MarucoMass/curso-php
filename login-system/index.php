@@ -22,10 +22,11 @@ require_once "includes/signup_view.inc.php";
         body {
             min-height: 100dvh;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             flex-direction: column;
             gap: 3rem;
+            padding-block-start: 4rem;
             background-color: #f1f1f1;
         }
 
@@ -60,9 +61,9 @@ require_once "includes/signup_view.inc.php";
     <section>
         <h2 >Sign Up</h2>
         <form action="includes/signup.inc.php" method="post">
-            <input type="text" name="username" placeholder="User name">
-            <input type="text" name="email" placeholder="Email">
-            <input type="password" name="pwd" placeholder="Password">
+           <?php
+            signup_inputs();
+           ?>
             <button>Dealé</button>
         </form>
 

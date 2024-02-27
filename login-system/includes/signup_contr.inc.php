@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-function is_input_empty(string $userName, string $email, string $pwd){
-    if (empty($userName) || empty($email) || empty($pwd)) {
+function is_input_empty(string $username, string $email, string $pwd){
+    if (empty($username) || empty($email) || empty($pwd)) {
         return true;
     } else {
         return false;
@@ -18,8 +18,8 @@ function is_email_invalid(string $email){
     } 
 }
 
-function is_username_taken(object $pdo, string $userName){
-    if (get_username($pdo, $userName)) {
+function is_username_taken(object $pdo, string $username){
+    if (get_username($pdo, $username)) {
         return true;
     } else {
         return false;
@@ -33,6 +33,6 @@ function is_email_registered(object $pdo, string $email){
     } 
 }
 
-function create_user(object $pdo, string $userName, string $email, string $pwd){
-    set_user($pdo, $userName, $email, $pwd);
+function create_user(object $pdo, string $username, string $email, string $pwd){
+    set_user($pdo, $username, $email, $pwd);
 }

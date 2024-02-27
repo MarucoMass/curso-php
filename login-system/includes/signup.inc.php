@@ -2,7 +2,7 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $userName = $_POST["username"];
+    $username = $_POST["username"];
     $email = $_POST["email"];
     $pwd = $_POST["pwd"];
 
@@ -15,13 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $errors = [];
 
-        if (is_input_empty($userName, $email, $pwd)) {
+        if (is_input_empty($username, $email, $pwd)) {
             $errors["empty_fields"] = "Tienes que completar todos los campos";
         }
         if (is_email_invalid($email)) {
             $errors["invalid_email"] = "El email que ingresaste no es válido";
         }
-        if (is_username_taken($pdo, $userName)) {
+        if (is_username_taken($pdo, $username)) {
             $errors["name_taken"] = "El nombre que usaste ya fue tomado por otro usuario";
         }
         if (is_email_registered($pdo, $email)) {
@@ -32,11 +32,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($errors) {
             $_SESSION["errors_signup"] = $errors;
+
+            $signupData = [
+                "username" => $username,
+                "email" => $email
+            ];
+            $_SESSION["signup_data"] = $signupData;
+
             header("Location: ../index.php");
             die();
         }
 
-        create_user($pdo, $userName, $email, $pwd);
+        create_user($pdo, $username, $email, $pwd);
         
         header("Location: ../index.php?signup=success");
 
