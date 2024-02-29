@@ -17,6 +17,14 @@
     echo $car_01->get_brand();
 ?>
 
+<section>
+        <h2>Sign up</h2>
+        <form action="includes/signup.inc.php" method="post">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="pwd" placeholder="Password">
+            <button>Dealé</button>
+        </form>
+    </section>
 
 </body>
 </html>

@@ -28,7 +28,7 @@ function set_user(object $pdo, string $username, string $email, string $pwd)
 {
     $query = "INSERT INTO users (username, email, pwd) VALUES (:username, :email, :pwd)";
 
-    $sstmt = $pdo->prepare($query);
+    $stmt = $pdo->prepare($query);
 
     $options = [
         "cost" => 12
@@ -36,10 +36,10 @@ function set_user(object $pdo, string $username, string $email, string $pwd)
 
     $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT, $options);
 
-    $sstmt->bindParam(":username", $username);
-    $sstmt->bindParam(":email", $email);
-    $sstmt->bindParam(":pwd", $hashedPwd);
+    $stmt->bindParam(":username", $username);
+    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":pwd", $hashedPwd);
 
-    $sstmt->execute();
+    $stmt->execute();
 
 }
