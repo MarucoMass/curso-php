@@ -1,0 +1,13 @@
+<?php
+
+$host = 'localhost';
+$db = 'testdata';
+$charset = 'utf8mb4';
+$user = "root";
+$pass = "";
+
+$dsn = "mysql:host=$host;dbname:$db;charset:$charset";
+
+$myPDO = new PDO($dsn,$user,$pass);
+
+var_dump($myPDO);  // testing
